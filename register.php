@@ -39,9 +39,9 @@
 
 <?php
 $username = @$_POST['username'];
-$password = @$_POST['password'];
+$password = @$_POST['password'];                /* TODO: directe sha512 nodig */
 $repassword = @$_POST['repassword'];
-$email = @$_POST['email'];
+$email = @$_POST['email'];                      /* TODO: email moet vervangen worden voor de username */
 $date = date("y-m-d");
 $salt = 'mmm_z0ut_l3kker';                 /* salt wordt gebruikt "mmm_z0ut_l3kker"*/
 $pass_en = openssl_digest($salt.$password, 'sha512');

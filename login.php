@@ -11,13 +11,13 @@ include 'connect.php'; /* connect to the database */
 
 session_start(); /* start the login session */
 
-$username = @$_POST['username'];
+$username = @$_POST['username'];    /* TODO: login moet veranderd worden voor een EMAIL */
 $password = @$_POST['password'];
 $salt = 'mmm_z0ut_l3kker';                 /* salt wordt gebruikt "mmm_z0ut_l3kker"*/
 
 if(isset($_POST['submit'])) {   /* On click submit */
     if($username && $password) { /* something is entered in the fields */
-        $check = mysql_query("SELECT * FROM users WHERE username='".$username."' ");    /* check username */
+        $check = mysql_query("SELECT * FROM users WHERE username='".$username."' ");    /* TODO: !! PDO !! is benodiged */
         $rows = mysql_num_rows($check);
 
         if (mysql_num_rows($check) != 0 ) {
