@@ -15,29 +15,71 @@ $username = @$_POST['username'];    /* TODO: login moet veranderd worden voor ee
 $password = @$_POST['password'];
 $salt = 'mmm_z0ut_l3kker';                 /* salt wordt gebruikt "mmm_z0ut_l3kker"*/
 
+$db_type = 'mysql';
+$db_host = 'localhost';
+$db_user = 'root';  /* TODO: een nieuwe user moet gemaakt worden*/
+$db_pass = '';
+$db_name = 'php_forum';
+
 if(isset($_POST['submit'])) {   /* On click submit */
     if($username && $password) { /* something is entered in the fields */
-        $check = mysql_query("SELECT * FROM users WHERE username='".$username."' ");    /* TODO: !! PDO !! is benodiged */
-        $rows = mysql_num_rows($check);
+        try {
+            $db_connect = new PDO("$db_type:host=$db_host; dbname=$db_name;", $db_user, $db_pass);
+            $query = "SELECT * FROM users WHERE username = :username AND  password = :password";
+            $resultaat = $db_connect->prepare($query);
+            $resultaat->execute(array(
+                    ':username' => $username,
+                    ':password' => openssl_digest($salt.$password, 'sha512'))
+            );
 
-        if (mysql_num_rows($check) != 0 ) {
-            while($row = mysql_fetch_assoc($check)) {
-                $db_username = $row['username'];    /* database username */
-                $db_password = $row['password'];    /* database hashed password */
-            }
-            if ($username == $db_username && openssl_digest($salt.$password, 'sha512') == $db_password) { /* hash the field password and compair it with the db_hash */
+            if ($resultaat->rowCount() > 0) { /* if() -> login gelukt */
+                $rij = $resultaat->fetch();
+
                 @$_SESSION["username"] = $username;
                 header("Location: index.php");
-            } else { /* the password is wrong */
-                echo "Please fill in all the fields correctly";
+                die(0);
+
+            } else {
+                echo "Please fill in all the fields correctly &emsp; ";
             }
-        } else { /* the username is wrong */
-            die("Please fill in all the fields correctly");
+
+        } catch (PDOException $error) {
+            echo "Please fill in all the fields correctly";
+            echo $error->getMessage();
+            die();
         }
     } else { /* A field is empty */
         echo "Please fill in all the fields correctly";
     }
 }
+
+
+
+//if(isset($_POST['submit'])) {   /* On click submit */
+//    if($username && $password) { /* something is entered in the fields */
+//        $check = mysql_query("SELECT * FROM users WHERE username='".$username."' ");    /* TODO: !! PDO !! is benodiged */
+//        $rows = mysql_num_rows($check);
+//
+//        if (mysql_num_rows($check) != 0 ) {
+//            while($row = mysql_fetch_assoc($check)) {
+//                $db_username = $row['username'];    /* database username */
+//                $db_password = $row['password'];    /* database hashed password */
+//            }
+//            if ($username == $db_username && openssl_digest($salt.$password, 'sha512') == $db_password) { /* hash the field password and compair it with the db_hash */
+//                @$_SESSION["username"] = $username;
+////                header("Location: index.php");
+//            } else { /* the password is wrong */
+//                echo "Please fill in all the fields correctly";
+//            }
+//        } else { /* the username is wrong */
+//            die("Please fill in all the fields correctly");
+//        }
+//    } else { /* A field is empty */
+//        echo "Please fill in all the fields correctly";
+//    }
+//}
+//
+
 ?>
 
 
