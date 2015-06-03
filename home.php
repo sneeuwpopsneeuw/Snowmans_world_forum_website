@@ -5,13 +5,9 @@ include 'connect.php';
 session_start();
 
 if(@$_SESSION["username"]) {
-    ?>
+    include 'navbar.php';
 
-    <center>  <a href="home.php"> Home page </a> | <a href="account.php"> My account </a> | <a href="members.php"> Members </a> | <a href="index.php?action=logout"> Logout </a>  </center>
-
-    <?php
     echo "<center> <h1> Home </h1>";
-
 
 
     echo "</center>";
