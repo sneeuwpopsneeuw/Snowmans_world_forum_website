@@ -1,20 +1,11 @@
 <?php include 'templates/header.php'; ?>
 
 <?php
-include 'connect.php';
-
-session_start();
-
 if(@$_SESSION["username"]) {
-
-    include 'navbar.php';
-
     echo "<center> <h1> Account </h1>";
     ?>
 
-
     <a href="account.php?action=ChangePassword"> Change Password </a>
-
 
     <?php
     echo "</center>";
@@ -23,7 +14,7 @@ if(@$_SESSION["username"]) {
         session_destroy();
         header("Location: login.php");
     }
-    else if (@$_GET['action'] == 'ChangePassword') {
+    elseif (@$_GET['action'] == 'ChangePassword') {
         ?>
         <center>
             <form action="account.php?action=ChangePassword" id="validate" class="form" method="POST" >

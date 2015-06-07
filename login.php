@@ -7,19 +7,12 @@
 </form>
 
 <?php
-include 'connect.php'; /* connect to the database */
-
-session_start(); /* start the login session */
-
-$username = @$_POST['username'];    /* TODO: login moet veranderd worden voor een EMAIL */
+$username = @$_POST['username'];    /* TODO: login username moet veranderd worden voor een EMAIL */
 $password = @$_POST['password'];
 $salt = 'mmm_z0ut_l3kker';                 /* salt wordt gebruikt "mmm_z0ut_l3kker"*/
 
-$db_type = 'mysql';
-$db_host = 'localhost';
-$db_user = 'root';  /* TODO: een nieuwe user moet gemaakt worden*/
-$db_pass = '';
-$db_name = 'php_forum';
+// DB information
+include 'config.php';
 
 if(isset($_POST['submit'])) {   /* On click submit */
     if($username && $password) { /* something is entered in the fields */

@@ -1,12 +1,7 @@
 <?php include 'templates/header.php'; ?>
 
 <?php
-include 'connect.php';
-session_start();
-
 if(@$_SESSION["username"]) {
-    include 'navbar.php';
-
     echo "<center> <h1> members </h1>";
     $db_type = 'mysql';
     $db_host = 'localhost';

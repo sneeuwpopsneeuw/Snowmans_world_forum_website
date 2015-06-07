@@ -1,0 +1,28 @@
+Data Base (DB)      php_forum
+
+users
+    id
+    username
+    password sha512 hash + salt
+    email
+
+topics
+    t_id
+    t_name
+    t_creator
+
+    TODO: t_replies
+
+subtopics
+    st_id
+    t_id
+    st_name
+    st_creator
+    st_content
+    st_date
+
+    TODO: st_replies
+
+
+TODO: replies
+TODO: starting to use placeholders by inputfields

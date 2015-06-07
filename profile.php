@@ -1,18 +1,19 @@
 <?php include 'templates/header.php'; ?>
 
 <?php
-include 'connect.php';
-session_start();
-
 if(@$_SESSION["username"]) {
-    include 'navbar.php';
-
     echo "<center> <h1> Profile  </h1>";
 
-    if (@$_GET['username']) {
+    /* TODO: start using functions here */
+    /* TODO: show only existing users */
+    if (@$_GET['username']) {                                                               /* IF ?username=... is used */
         echo "welkom op de pagina (vagina) van ".$_GET['username']."@gmail.orgy";
-    } else {
-        header("Location: members.php"); /* TODO: je moet naar je ijgen profiel door gewezen worden */
+    }
+    elseif (isset($_SESSION["username"])) {                                                /* ELSE IF session exist use that instead*/
+        echo "welkom op de pagina (vagina) van ".@$_SESSION["username"]."@gmail.orgy";
+    }
+    else {                                                                                   /* ELSE you are logged in but you did not go to a profile */
+        header("Location: members.php");
         die(0);
     }
 
